@@ -7,8 +7,6 @@ use regex::Regex;
 
 fn main() {
     lazy_static! {
-        // https://regex101.com/r/ehbOBe/1
-        // static ref RE: Regex = Regex::new(r"(\| | *|\|*)*([|`])-").unwrap();
         static ref RE: Regex = Regex::new(r"(\| | *|\|*)*([|`])-[A-Z,a-z]*").unwrap();
         static ref WORD: Regex = Regex::new(r"([A-Z,a-z]+)").unwrap();
     }
@@ -34,6 +32,13 @@ fn main() {
                         tree_chain.truncate(level - 1);
                     }
                     tree_chain.push(keyword.to_string());
+
+                    if line.contains("class") && line.contains("definition") {
+                        println!("{}", line);
+                        println!("We did it");
+                    }
+
+                    // tree_chain.binary_search()
                 }
             };
         }

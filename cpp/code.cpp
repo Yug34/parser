@@ -1,18 +1,20 @@
 class foo {
-    private:
     public:
+        foo() {}
+        ~foo() {}
+    private:
     protected:
 };
 
 class bar {
-    private:
     public:
+    private:
     protected:
 };
 
 class baz {
-    private:
     public:
+    private:
     protected:
 };
 
