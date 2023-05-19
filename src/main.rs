@@ -1,14 +1,29 @@
 // TODO: -ast-dump=json
+//       tree_chain.binary_search()
 use lazy_static::lazy_static;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 use regex::Regex;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Inherits {
+    public: Vec<String>,
+    private: Vec<String>,
+    protected: Vec<String>
+}
+#[derive(Debug, Deserialize, Serialize)]
+struct Class {
+    name: String,
+    inherited: Inherits
+}
 
 fn main() {
     lazy_static! {
         static ref RE: Regex = Regex::new(r"(\| | *|\|*)*([|`])-[A-Z,a-z]*").unwrap();
         static ref WORD: Regex = Regex::new(r"([A-Z,a-z]+)").unwrap();
+        static ref GET_CLASS: Regex = Regex::new(r"referenced class [_,A-Z,a-z,0-9]+ definition").unwrap();
     }
 
     // File hosts must exist in current path before this produces output
@@ -33,12 +48,25 @@ fn main() {
                     }
                     tree_chain.push(keyword.to_string());
 
-                    if line.contains("class") && line.contains("definition") {
-                        println!("{}", line);
-                        println!("We did it");
-                    }
+                    if GET_CLASS.is_match(line) {
+                        let matched = GET_CLASS.find(line).unwrap().as_str().split(" ");
+                        let class_name = matched.collect::<Vec<&str>>()[2];
 
-                    // tree_chain.binary_search()
+                        let class = r#"
+                            {
+                              "name": "class_name",
+                              "inherited": {
+                                "public": ["aa"],
+                                "private": ["bb"],
+                                "protected": ["cc"]
+                              }
+                            }
+                        "#.replace("class_name", class_name);
+
+                        let class: Class = serde_json::from_str(class.as_str()).unwrap();
+
+                        println!("{:?}", class);
+                    }
                 }
             };
         }
