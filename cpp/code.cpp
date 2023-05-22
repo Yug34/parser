@@ -1,10 +1,11 @@
-struct aaa {
+struct Some_Struct {
     int x;
     double d;
     char c;
-};
+} randomStruct;
 
 class foo {
+    // TODO in the parser:
     public:
         foo() {}
         ~foo() {}
@@ -32,7 +33,7 @@ class lorem {
 
 class Base: public foo, public bar, private baz, protected lorem {
     public:
-    int add(int x, int y) {
+    int add(int x, int y, int z) {
         return x + y;
     }
     int sub(int x, int y) {
@@ -42,11 +43,8 @@ class Base: public foo, public bar, private baz, protected lorem {
     int mul(int x, int y) {
         return x * y;
     }
-    void arrayFunc(char charArray[]) {
-        return;
-    }
-    void intArrayFunc(int intArray[]) {
-        return;
+    int arrayFunc(char charArray[]) {
+        return 0;
     }
 };
 
@@ -54,6 +52,8 @@ int main() {
     Base base;
     base.add(1, 2);
     base.sub(2, 1);
+
+    randomStruct.d = 1.42;
 
     return 0;
 }

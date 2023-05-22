@@ -22,9 +22,6 @@ pub struct Method {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Class {
     name: String,
-    //TODO:
-    // constructor: Option<String>,
-    // destructor: Option<String>,
     inherited: Inherit,
     methods: Vec<Method>
 }
@@ -47,15 +44,16 @@ lazy_static! {
     static ref GET_CLASS: Regex = Regex::new(r"referenced class [_,A-Z,a-z,0-9]+ definition").unwrap();
     static ref GET_STRUCT: Regex = Regex::new(r"struct [_,A-Z,a-z,0-9]+ definition").unwrap();
     static ref GET_INHERITED_CLASS: Regex = Regex::new(r"'[_,A-Z,a-z,0-9]*'").unwrap();
-    static ref GET_METHOD: Regex = Regex::new(r"(used )?[_,A-Z,a-z,0-9]+ '[(,),A-Z,a-z, ]+'").unwrap();
-    static ref GET_METHOD_NAME: Regex = Regex::new(r"'[(,),A-Z,a-z, ]+'").unwrap();
-    static ref GET_VARIABLE: Regex = Regex::new(r"[_,A-Z,a-z,0-9]+ '[a-z]+'").unwrap();
+    static ref GET_METHOD: Regex = Regex::new(r"(used )?[_,A-Z,a-z,0-9]+ '[(,),A-Z,a-z, ,*]+'").unwrap();
+    static ref GET_METHOD_NAME: Regex = Regex::new(r"'[(,),A-Z,a-z, ,*]+'").unwrap();
+    // TODO for variables: (used |referenced )?[_,A-Z,a-z,0-9]+ '[(,),A-Z,a-z, ,*]+'
+    static ref GET_VARIABLE: Regex = Regex::new(r"[_,A-Z,a-z,0-9]+ '[(,),A-Z,a-z, ,*]+'").unwrap();
 }
 
 pub struct State {
     struct_list: Vec<Struct>,
     class_list: Vec<Class>,
-    tree_chain: Vec<String>,
+    tree_path: Vec<String>,
     matched_string: String,
     keyword: String,
     level: usize
@@ -68,35 +66,49 @@ impl State {
     pub fn class_list(&self) -> &Vec<Class> {
         &self.class_list
     }
-    pub fn tree_chain(&self) -> &Vec<String> {
-        &self.tree_chain
+    pub fn tree_path(&self) -> &Vec<String> {
+        &self.tree_path
     }
     fn initialize_state(&mut self, line: &String) {
         self.matched_string = RE.find(line).unwrap().as_str().to_owned();
+        // TODO: instead of a Regex:
+        //  Split the matched_string at '-' and get the keyword that way:
+        //  Unsure which one is better(/faster), perhaps I'll benchmark, (nitpick but I'm curious).
         self.keyword = WORD.find(self.matched_string.as_str()).unwrap().as_str().to_owned();
-        // TODO: instead of a Regexp, I could do:
-        //  self.matched_string.split_at(self.matched_string.find("-").unwrap() + 1).1.to_string();
-        //  Unsure which one is better(/faster), perhaps I'll benchmark, I'm curious.
-
-        // Note: Don't really need this and the logic after, there's no use of it in this project:
-        //   It's there in case we need to know what our "branch" in the AST looks like and
-        //   need to make decisions based on if our branch has some parent node or not.
         self.level = (self.matched_string.len() - self.keyword.len()) / 2;
 
-        let chain_len = self.tree_chain.len();
+        // Tracking our current branch/path in the AST
+        let chain_len = self.tree_path.len();
         if self.level == chain_len {
-            self.tree_chain.pop();
+            self.tree_path.pop();
         } else {
-            self.tree_chain.truncate(self.level - 1);
+            self.tree_path.truncate(self.level - 1);
         }
-        self.tree_chain.push(line.to_string());
+        self.tree_path.push(line.to_string());
     }
 
     pub fn process_line(&mut self, line: String) {
         self.initialize_state(&line);
 
         // CXXRecordDecl represents a C++ struct/union/class.
+        // Matching specifically for class decl:
+        if GET_CLASS.is_match(&line) {
+            let matched = GET_CLASS.find(&line).unwrap().as_str().split(" ");
+            let class_name = matched.collect::<Vec<&str>>()[2];
+            let class: Class = Class {
+                name: class_name.to_string(),
+                inherited: Inherit {
+                    public: vec![],
+                    private: vec![],
+                    protected: vec![]
+                },
+                methods: vec![]
+            };
+            self.class_list.push(class);
+        }
+
         if matches!(self.keyword.as_str(), "CXXRecordDecl") {
+            // A union would be more of the same.
             // Matching specifically for struct decl:
             if GET_STRUCT.is_match(&line) {
                 let matched = GET_STRUCT.find(&line).unwrap().as_str().split(" ");
@@ -106,22 +118,6 @@ impl State {
                     variables: vec![]
                 };
                 self.struct_list.push(new_struct);
-            }
-
-            // Matching specifically for class decl:
-            if GET_CLASS.is_match(&line) {
-                let matched = GET_CLASS.find(&line).unwrap().as_str().split(" ");
-                let class_name = matched.collect::<Vec<&str>>()[2];
-                let class: Class = Class {
-                    name: class_name.to_string(),
-                    inherited: Inherit {
-                        public: vec![],
-                        private: vec![],
-                        protected: vec![]
-                    },
-                    methods: vec![]
-                };
-                self.class_list.push(class);
             }
         }
 
@@ -137,7 +133,7 @@ impl State {
                     variable_type: variable_signature,
                 };
 
-                if self.search_tree_chain("struct") {
+                if self.search_tree_path("struct") {
                     let mut last_struct = self.struct_list.pop().unwrap();
                     last_struct.variables.push(variable);
                     self.struct_list.push(last_struct);
@@ -164,31 +160,24 @@ impl State {
             }
         }
 
-        // public, private and protected represent the classes that the current class inherits from
+        // public/private/protected represent the classes that the current class inherits from
         if matches!(self.keyword.as_str(), "public" | "private" | "protected") {
             let inherited_from = GET_INHERITED_CLASS.find(&line).unwrap().as_str().replace("'", "");
-            //TODO: Stupid, needs fix. There's constant .pop() and .push()ing for no reason
-            let mut last = self.class_list.pop().unwrap();
 
+            //TODO: Stupid, needs fix. There's constant .pop() and .push()ing for no reason.
+            let mut last = self.class_list.pop().unwrap();
             match self.keyword.as_str() {
-                "public" => {
-                    last.inherited.public.push(inherited_from);
-                }
-                "private" => {
-                    last.inherited.private.push(inherited_from);
-                }
-                "protected" => {
-                    last.inherited.protected.push(inherited_from);
-                }
+                "public" => { last.inherited.public.push(inherited_from) }
+                "private" => { last.inherited.private.push(inherited_from) }
+                "protected" => { last.inherited.protected.push(inherited_from) }
                 _ => {}
             }
-
             self.class_list.push(last);
         }
     }
 
-    pub fn search_tree_chain(&mut self, keyword: &str) -> bool {
-        for line in self.tree_chain.clone().into_iter().rev() {
+    pub fn search_tree_path(&mut self, keyword: &str) -> bool {
+        for line in self.tree_path.clone().into_iter().rev() {
             if line.contains(keyword) {
                 return true;
             }
@@ -197,20 +186,13 @@ impl State {
     }
 
     pub fn new() -> State {
-        let struct_list: Vec<Struct> = vec![];
-        let class_list: Vec<Class> = vec![];
-        let tree_chain: Vec<String> = vec![];
-        let matched_string = String::new();
-        let keyword = String::new();
-        let level = 0;
-
         State {
-            struct_list,
-            class_list,
-            tree_chain,
-            matched_string,
-            keyword,
-            level
+            struct_list: vec![],
+            class_list: vec![],
+            tree_path: vec![],
+            matched_string: String::new(),
+            keyword: String::new(),
+            level: 0
         }
     }
 }
@@ -227,13 +209,13 @@ fn main() {
                 state.process_line(ip.as_str().to_owned());
             }
         }
-        state.search_tree_chain("aa");
 
         // Print the output and write it to output.json
         let json_output = json!({"class-data": state.class_list, "struct-data": state.struct_list});
-        println!("{}", json_output);
+        let json_prettified = serde_json::to_string_pretty(&json_output).unwrap();
+        println!("{}", json_prettified);
         if let Ok(mut file) = File::create("output.json") {
-            file.write_all(json_output.to_string().as_ref()).unwrap();
+            file.write_all(json_prettified.to_string().as_ref()).unwrap();
         }
     }
 }

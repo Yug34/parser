@@ -1,19 +1,19 @@
-TranslationUnitDecl 0x1c8db38 <<invalid sloc>> <invalid sloc>
-|-TypedefDecl 0x1c8e3a0 <<invalid sloc>> <invalid sloc> implicit __int128_t '__int128'
-| `-BuiltinType 0x1c8e100 '__int128'
-|-TypedefDecl 0x1c8e410 <<invalid sloc>> <invalid sloc> implicit __uint128_t 'unsigned __int128'
-| `-BuiltinType 0x1c8e120 'unsigned __int128'
-|-TypedefDecl 0x1c8e788 <<invalid sloc>> <invalid sloc> implicit __NSConstantString '__NSConstantString_tag'
-| `-RecordType 0x1c8e500 '__NSConstantString_tag'
-|   `-CXXRecord 0x1c8e468 '__NSConstantString_tag'
-|-TypedefDecl 0x1c8e820 <<invalid sloc>> <invalid sloc> implicit __builtin_ms_va_list 'char *'
-| `-PointerType 0x1c8e7e0 'char *'
-|   `-BuiltinType 0x1c8dbe0 'char'
-|-TypedefDecl 0x1cd32d8 <<invalid sloc>> <invalid sloc> implicit __builtin_va_list '__va_list_tag[1]'
-| `-ConstantArrayType 0x1cd3280 '__va_list_tag[1]' 1 
-|   `-RecordType 0x1c8e910 '__va_list_tag'
-|     `-CXXRecord 0x1c8e878 '__va_list_tag'
-|-CXXRecordDecl 0x1cd3330 <code.cpp:1:1, line:3:1> line:1:8 struct aaa definition
+TranslationUnitDecl 0xa05b38 <<invalid sloc>> <invalid sloc>
+|-TypedefDecl 0xa063a0 <<invalid sloc>> <invalid sloc> implicit __int128_t '__int128'
+| `-BuiltinType 0xa06100 '__int128'
+|-TypedefDecl 0xa06410 <<invalid sloc>> <invalid sloc> implicit __uint128_t 'unsigned __int128'
+| `-BuiltinType 0xa06120 'unsigned __int128'
+|-TypedefDecl 0xa06788 <<invalid sloc>> <invalid sloc> implicit __NSConstantString '__NSConstantString_tag'
+| `-RecordType 0xa06500 '__NSConstantString_tag'
+|   `-CXXRecord 0xa06468 '__NSConstantString_tag'
+|-TypedefDecl 0xa06820 <<invalid sloc>> <invalid sloc> implicit __builtin_ms_va_list 'char *'
+| `-PointerType 0xa067e0 'char *'
+|   `-BuiltinType 0xa05be0 'char'
+|-TypedefDecl 0xa4b638 <<invalid sloc>> <invalid sloc> implicit __builtin_va_list '__va_list_tag[1]'
+| `-ConstantArrayType 0xa4b5e0 '__va_list_tag[1]' 1 
+|   `-RecordType 0xa06910 '__va_list_tag'
+|     `-CXXRecord 0xa06878 '__va_list_tag'
+|-CXXRecordDecl 0xa4b690 <code.cpp:1:1, line:5:1> line:1:8 struct aaa definition
 | |-DefinitionData pass_in_registers aggregate standard_layout trivially_copyable pod trivial literal
 | | |-DefaultConstructor exists trivial needs_implicit
 | | |-CopyConstructor simple trivial has_const_param needs_implicit implicit_has_const_param
@@ -21,21 +21,11 @@ TranslationUnitDecl 0x1c8db38 <<invalid sloc>> <invalid sloc>
 | | |-CopyAssignment simple trivial has_const_param needs_implicit implicit_has_const_param
 | | |-MoveAssignment exists simple trivial needs_implicit
 | | `-Destructor simple irrelevant trivial needs_implicit
-| |-CXXRecordDecl 0x1cd3448 <col:1, col:8> col:8 implicit struct aaa
-| `-FieldDecl 0x1cd34f0 <line:2:5, col:9> col:9 x 'int'
-|-CXXRecordDecl 0x1cd3558 <line:5:1, line:9:1> line:5:7 union bbb definition
-| |-DefinitionData pass_in_registers aggregate standard_layout trivially_copyable pod trivial literal has_variant_members
-| | |-DefaultConstructor exists trivial needs_implicit
-| | |-CopyConstructor simple trivial has_const_param needs_implicit implicit_has_const_param
-| | |-MoveConstructor exists simple trivial needs_implicit
-| | |-CopyAssignment simple trivial has_const_param needs_implicit implicit_has_const_param
-| | |-MoveAssignment exists simple trivial needs_implicit
-| | `-Destructor simple irrelevant trivial needs_implicit
-| |-CXXRecordDecl 0x1cd3678 <col:1, col:7> col:7 implicit union bbb
-| |-FieldDecl 0x1cd3720 <line:6:5, col:9> col:9 random1 'int'
-| |-FieldDecl 0x1cd3780 <line:7:5, col:10> col:10 random2 'char'
-| `-FieldDecl 0x1cd37e8 <line:8:5, col:11> col:11 random3 'float'
-|-CXXRecordDecl 0x1cd3850 <line:11:1, line:17:1> line:11:7 referenced class foo definition
+| |-CXXRecordDecl 0xa4b7a8 <col:1, col:8> col:8 implicit struct aaa
+| |-FieldDecl 0xa4b850 <line:2:5, col:9> col:9 x 'int'
+| |-FieldDecl 0xa4b8b8 <line:3:5, col:12> col:12 d 'double'
+| `-FieldDecl 0xa4b918 <line:4:5, col:10> col:10 c 'char'
+|-CXXRecordDecl 0xa4b980 <line:7:1, line:13:1> line:7:7 referenced class foo definition
 | |-DefinitionData empty standard_layout has_user_declared_ctor can_const_default_init
 | | |-DefaultConstructor exists non_trivial user_provided defaulted_is_constexpr
 | | |-CopyConstructor simple trivial has_const_param implicit_has_const_param
@@ -43,19 +33,19 @@ TranslationUnitDecl 0x1c8db38 <<invalid sloc>> <invalid sloc>
 | | |-CopyAssignment simple trivial has_const_param implicit_has_const_param
 | | |-MoveAssignment
 | | `-Destructor non_trivial user_declared
-| |-CXXRecordDecl 0x1cd3968 <col:1, col:7> col:7 implicit referenced class foo
-| |-AccessSpecDecl 0x1cd39f8 <line:12:5, col:11> col:5 public
-| |-CXXConstructorDecl 0x1cd3aa8 <line:13:9, col:16> col:9 used foo 'void ()'
-| | `-CompoundStmt 0x1cd3cd0 <col:15, col:16>
-| |-CXXDestructorDecl 0x1cd3b98 <line:14:9, col:17> col:9 used ~foo 'void () noexcept'
-| | `-CompoundStmt 0x1cd3d08 <col:16, col:17>
-| |-AccessSpecDecl 0x1cd3c80 <line:15:5, col:12> col:5 private
-| |-AccessSpecDecl 0x1cd3ca8 <line:16:5, col:14> col:5 protected
-| |-CXXConstructorDecl 0x1d05138 <line:11:7> col:7 implicit constexpr foo 'void (const foo &)' inline default trivial noexcept-unevaluated 0x1d05138
-| | `-ParmVarDecl 0x1d05248 <col:7> col:7 'const foo &'
-| `-CXXMethodDecl 0x1d061a8 <col:7> col:7 implicit operator= 'foo &(const foo &)' inline default trivial noexcept-unevaluated 0x1d061a8
-|   `-ParmVarDecl 0x1d062b8 <col:7> col:7 'const foo &'
-|-CXXRecordDecl 0x1cd3d18 <line:19:1, line:23:1> line:19:7 referenced class bar definition
+| |-CXXRecordDecl 0xa4ba98 <col:1, col:7> col:7 implicit referenced class foo
+| |-AccessSpecDecl 0xa4bb28 <line:8:5, col:11> col:5 public
+| |-CXXConstructorDecl 0xa4bbd8 <line:9:9, col:16> col:9 used foo 'void ()'
+| | `-CompoundStmt 0xa4be00 <col:15, col:16>
+| |-CXXDestructorDecl 0xa4bcc8 <line:10:9, col:17> col:9 used ~foo 'void () noexcept'
+| | `-CompoundStmt 0xa4be38 <col:16, col:17>
+| |-AccessSpecDecl 0xa4bdb0 <line:11:5, col:12> col:5 private
+| |-AccessSpecDecl 0xa4bdd8 <line:12:5, col:14> col:5 protected
+| |-CXXConstructorDecl 0xa7d5f8 <line:7:7> col:7 implicit constexpr foo 'void (const foo &)' inline default trivial noexcept-unevaluated 0xa7d5f8
+| | `-ParmVarDecl 0xa7d708 <col:7> col:7 'const foo &'
+| `-CXXMethodDecl 0xa7fc18 <col:7> col:7 implicit operator= 'foo &(const foo &)' inline default trivial noexcept-unevaluated 0xa7fc18
+|   `-ParmVarDecl 0xa7fd28 <col:7> col:7 'const foo &'
+|-CXXRecordDecl 0xa4be48 <line:15:1, line:19:1> line:15:7 referenced class bar definition
 | |-DefinitionData pass_in_registers empty aggregate standard_layout trivially_copyable pod trivial literal has_constexpr_non_copy_move_ctor can_const_default_init
 | | |-DefaultConstructor exists trivial constexpr defaulted_is_constexpr
 | | |-CopyConstructor simple trivial has_const_param implicit_has_const_param
@@ -63,35 +53,69 @@ TranslationUnitDecl 0x1c8db38 <<invalid sloc>> <invalid sloc>
 | | |-CopyAssignment simple trivial has_const_param implicit_has_const_param
 | | |-MoveAssignment exists simple trivial
 | | `-Destructor simple irrelevant trivial
-| |-CXXRecordDecl 0x1cd3e38 <col:1, col:7> col:7 implicit class bar
-| |-AccessSpecDecl 0x1cd3ec8 <line:20:5, col:11> col:5 public
-| |-AccessSpecDecl 0x1cd3ef0 <line:21:5, col:12> col:5 private
-| |-AccessSpecDecl 0x1cd3f18 <line:22:5, col:14> col:5 protected
-| |-CXXConstructorDecl 0x1d05308 <line:19:7> col:7 implicit constexpr bar 'void (const bar &)' inline default trivial noexcept-unevaluated 0x1d05308
-| | `-ParmVarDecl 0x1d05418 <col:7> col:7 'const bar &'
-| |-CXXConstructorDecl 0x1d059f8 <col:7> col:7 implicit constexpr bar 'void (bar &&)' inline default trivial noexcept-unevaluated 0x1d059f8
-| | `-ParmVarDecl 0x1d05b08 <col:7> col:7 'bar &&'
-| |-CXXDestructorDecl 0x1d05d28 <col:7> col:7 implicit ~bar 'void () noexcept' inline default trivial
-| |-CXXMethodDecl 0x1d06358 <col:7> col:7 implicit constexpr operator= 'bar &(const bar &)' inline default trivial noexcept-unevaluated 0x1d06358
-| | `-ParmVarDecl 0x1d06468 <col:7> col:7 'const bar &'
-| |-CXXMethodDecl 0x1d064d8 <col:7> col:7 implicit constexpr operator= 'bar &(bar &&)' inline default trivial noexcept-unevaluated 0x1d064d8
-| | `-ParmVarDecl 0x1d065e8 <col:7> col:7 'bar &&'
-| `-CXXConstructorDecl 0x1d07810 <col:7> col:7 implicit used constexpr bar 'void () noexcept' inline default trivial
-|   `-CompoundStmt 0x1d07be8 <col:7>
-|-CXXRecordDecl 0x1cd3f58 <line:25:1, line:29:1> line:25:7 class baz definition
+| |-CXXRecordDecl 0xa4bf68 <col:1, col:7> col:7 implicit class bar
+| |-AccessSpecDecl 0xa4bff8 <line:16:5, col:11> col:5 public
+| |-AccessSpecDecl 0xa4c020 <line:17:5, col:12> col:5 private
+| |-AccessSpecDecl 0xa4c048 <line:18:5, col:14> col:5 protected
+| |-CXXConstructorDecl 0xa7dd80 <line:15:7> col:7 implicit constexpr bar 'void (const bar &)' inline default trivial noexcept-unevaluated 0xa7dd80
+| | `-ParmVarDecl 0xa7de98 <col:7> col:7 'const bar &'
+| |-CXXConstructorDecl 0xa7df38 <col:7> col:7 implicit constexpr bar 'void (bar &&)' inline default trivial noexcept-unevaluated 0xa7df38
+| | `-ParmVarDecl 0xa7e048 <col:7> col:7 'bar &&'
+| |-CXXDestructorDecl 0xa7e968 <col:7> col:7 implicit ~bar 'void () noexcept' inline default trivial
+| |-CXXMethodDecl 0xa7fdc8 <col:7> col:7 implicit constexpr operator= 'bar &(const bar &)' inline default trivial noexcept-unevaluated 0xa7fdc8
+| | `-ParmVarDecl 0xa7fed8 <col:7> col:7 'const bar &'
+| |-CXXMethodDecl 0xa7ff48 <col:7> col:7 implicit constexpr operator= 'bar &(bar &&)' inline default trivial noexcept-unevaluated 0xa7ff48
+| | `-ParmVarDecl 0xa80058 <col:7> col:7 'bar &&'
+| `-CXXConstructorDecl 0xa81ae0 <col:7> col:7 implicit used constexpr bar 'void () noexcept' inline default trivial
+|   `-CompoundStmt 0xa82218 <col:7>
+|-CXXRecordDecl 0xa4c088 <line:21:1, line:25:1> line:21:7 referenced class baz definition
 | |-DefinitionData pass_in_registers empty aggregate standard_layout trivially_copyable pod trivial literal has_constexpr_non_copy_move_ctor can_const_default_init
-| | |-DefaultConstructor exists trivial constexpr needs_implicit defaulted_is_constexpr
-| | |-CopyConstructor simple trivial has_const_param needs_implicit implicit_has_const_param
-| | |-MoveConstructor exists simple trivial needs_implicit
-| | |-CopyAssignment simple trivial has_const_param needs_implicit implicit_has_const_param
-| | |-MoveAssignment exists simple trivial needs_implicit
-| | `-Destructor simple irrelevant trivial needs_implicit
-| |-CXXRecordDecl 0x1cd4078 <col:1, col:7> col:7 implicit class baz
-| |-AccessSpecDecl 0x1cd4108 <line:26:5, col:11> col:5 public
-| |-AccessSpecDecl 0x1cd4130 <line:27:5, col:12> col:5 private
-| `-AccessSpecDecl 0x1cd4158 <line:28:5, col:14> col:5 protected
-|-CXXRecordDecl 0x1cd4198 <line:31:1, line:49:1> line:31:7 referenced class Base definition
-| |-DefinitionData empty aggregate standard_layout can_const_default_init
+| | |-DefaultConstructor exists trivial constexpr defaulted_is_constexpr
+| | |-CopyConstructor simple trivial has_const_param implicit_has_const_param
+| | |-MoveConstructor exists simple trivial
+| | |-CopyAssignment simple trivial has_const_param implicit_has_const_param
+| | |-MoveAssignment exists simple trivial
+| | `-Destructor simple irrelevant trivial
+| |-CXXRecordDecl 0xa4c1a8 <col:1, col:7> col:7 implicit class baz
+| |-AccessSpecDecl 0xa4c238 <line:22:5, col:11> col:5 public
+| |-AccessSpecDecl 0xa4c260 <line:23:5, col:12> col:5 private
+| |-AccessSpecDecl 0xa4c288 <line:24:5, col:14> col:5 protected
+| |-CXXConstructorDecl 0xa7e108 <line:21:7> col:7 implicit constexpr baz 'void (const baz &)' inline default trivial noexcept-unevaluated 0xa7e108
+| | `-ParmVarDecl 0xa7e218 <col:7> col:7 'const baz &'
+| |-CXXConstructorDecl 0xa7e2b8 <col:7> col:7 implicit constexpr baz 'void (baz &&)' inline default trivial noexcept-unevaluated 0xa7e2b8
+| | `-ParmVarDecl 0xa7e3c8 <col:7> col:7 'baz &&'
+| |-CXXDestructorDecl 0xa7ea50 <col:7> col:7 implicit ~baz 'void () noexcept' inline default trivial
+| |-CXXMethodDecl 0xa80108 <col:7> col:7 implicit constexpr operator= 'baz &(const baz &)' inline default trivial noexcept-unevaluated 0xa80108
+| | `-ParmVarDecl 0xa80218 <col:7> col:7 'const baz &'
+| |-CXXMethodDecl 0xa80288 <col:7> col:7 implicit constexpr operator= 'baz &(baz &&)' inline default trivial noexcept-unevaluated 0xa80288
+| | `-ParmVarDecl 0xa80398 <col:7> col:7 'baz &&'
+| `-CXXConstructorDecl 0xa81bd0 <col:7> col:7 implicit used constexpr baz 'void () noexcept' inline default trivial
+|   `-CompoundStmt 0xa822b0 <col:7>
+|-CXXRecordDecl 0xa4c2c8 <line:27:1, line:31:1> line:27:7 referenced class lorem definition
+| |-DefinitionData pass_in_registers empty aggregate standard_layout trivially_copyable pod trivial literal has_constexpr_non_copy_move_ctor can_const_default_init
+| | |-DefaultConstructor exists trivial constexpr defaulted_is_constexpr
+| | |-CopyConstructor simple trivial has_const_param implicit_has_const_param
+| | |-MoveConstructor exists simple trivial
+| | |-CopyAssignment simple trivial has_const_param implicit_has_const_param
+| | |-MoveAssignment exists simple trivial
+| | `-Destructor simple irrelevant trivial
+| |-CXXRecordDecl 0xa4c3e8 <col:1, col:7> col:7 implicit class lorem
+| |-AccessSpecDecl 0xa4c478 <line:28:5, col:11> col:5 public
+| |-AccessSpecDecl 0xa4c4a0 <line:29:5, col:12> col:5 private
+| |-AccessSpecDecl 0xa4c4c8 <line:30:5, col:14> col:5 protected
+| |-CXXConstructorDecl 0xa7e488 <line:27:7> col:7 implicit constexpr lorem 'void (const lorem &)' inline default trivial noexcept-unevaluated 0xa7e488
+| | `-ParmVarDecl 0xa7e598 <col:7> col:7 'const lorem &'
+| |-CXXConstructorDecl 0xa7e638 <col:7> col:7 implicit constexpr lorem 'void (lorem &&)' inline default trivial noexcept-unevaluated 0xa7e638
+| | `-ParmVarDecl 0xa7e748 <col:7> col:7 'lorem &&'
+| |-CXXDestructorDecl 0xa7eb30 <col:7> col:7 implicit ~lorem 'void () noexcept' inline default trivial
+| |-CXXMethodDecl 0xa80448 <col:7> col:7 implicit constexpr operator= 'lorem &(const lorem &)' inline default trivial noexcept-unevaluated 0xa80448
+| | `-ParmVarDecl 0xa80558 <col:7> col:7 'const lorem &'
+| |-CXXMethodDecl 0xa805c8 <col:7> col:7 implicit constexpr operator= 'lorem &(lorem &&)' inline default trivial noexcept-unevaluated 0xa805c8
+| | `-ParmVarDecl 0xa806d8 <col:7> col:7 'lorem &&'
+| `-CXXConstructorDecl 0xa81cc0 <col:7> col:7 implicit used constexpr lorem 'void () noexcept' inline default trivial
+|   `-CompoundStmt 0xa82340 <col:7>
+|-CXXRecordDecl 0xa4c508 <line:33:1, line:51:1> line:33:7 referenced class Base definition
+| |-DefinitionData empty standard_layout can_const_default_init
 | | |-DefaultConstructor exists non_trivial
 | | |-CopyConstructor simple trivial has_const_param needs_overload_resolution implicit_has_const_param
 | | |-MoveConstructor exists simple trivial needs_overload_resolution
@@ -100,75 +124,84 @@ TranslationUnitDecl 0x1c8db38 <<invalid sloc>> <invalid sloc>
 | | `-Destructor simple non_trivial needs_overload_resolution
 | |-public 'foo'
 | |-public 'bar'
-| |-CXXRecordDecl 0x1d04568 <col:1, col:7> col:7 implicit class Base
-| |-AccessSpecDecl 0x1d045f8 <line:32:5, col:11> col:5 public
-| |-CXXMethodDecl 0x1d047c0 <line:33:5, line:35:5> line:33:9 used add 'int (int, int)'
-| | |-ParmVarDecl 0x1d04638 <col:13, col:17> col:17 used x 'int'
-| | |-ParmVarDecl 0x1d046b8 <col:20, col:24> col:24 used y 'int'
-| | `-CompoundStmt 0x1d06800 <col:27, line:35:5>
-| |   `-ReturnStmt 0x1d067f0 <line:34:9, col:20>
-| |     `-BinaryOperator 0x1d067d0 <col:16, col:20> 'int' '+'
-| |       |-ImplicitCastExpr 0x1d067a0 <col:16> 'int' <LValueToRValue>
-| |       | `-DeclRefExpr 0x1d06760 <col:16> 'int' lvalue ParmVar 0x1d04638 'x' 'int'
-| |       `-ImplicitCastExpr 0x1d067b8 <col:20> 'int' <LValueToRValue>
-| |         `-DeclRefExpr 0x1d06780 <col:20> 'int' lvalue ParmVar 0x1d046b8 'y' 'int'
-| |-CXXMethodDecl 0x1d049a8 <line:36:5, line:38:5> line:36:9 used sub 'int (int, int)'
-| | |-ParmVarDecl 0x1d04888 <col:13, col:17> col:17 used x 'int'
-| | |-ParmVarDecl 0x1d04908 <col:20, col:24> col:24 used y 'int'
-| | `-CompoundStmt 0x1d068b8 <col:27, line:38:5>
-| |   `-ReturnStmt 0x1d068a8 <line:37:9, col:20>
-| |     `-BinaryOperator 0x1d06888 <col:16, col:20> 'int' '-'
-| |       |-ImplicitCastExpr 0x1d06858 <col:16> 'int' <LValueToRValue>
-| |       | `-DeclRefExpr 0x1d06818 <col:16> 'int' lvalue ParmVar 0x1d04888 'x' 'int'
-| |       `-ImplicitCastExpr 0x1d06870 <col:20> 'int' <LValueToRValue>
-| |         `-DeclRefExpr 0x1d06838 <col:20> 'int' lvalue ParmVar 0x1d04908 'y' 'int'
-| |-AccessSpecDecl 0x1d04a58 <line:39:5, col:12> col:5 private
-| |-CXXMethodDecl 0x1d04bb8 <line:40:5, line:42:5> line:40:9 mul 'int (int, int)'
-| | |-ParmVarDecl 0x1d04a98 <col:13, col:17> col:17 used x 'int'
-| | |-ParmVarDecl 0x1d04b18 <col:20, col:24> col:24 used y 'int'
-| | `-CompoundStmt 0x1d06970 <col:27, line:42:5>
-| |   `-ReturnStmt 0x1d06960 <line:41:9, col:20>
-| |     `-BinaryOperator 0x1d06940 <col:16, col:20> 'int' '*'
-| |       |-ImplicitCastExpr 0x1d06910 <col:16> 'int' <LValueToRValue>
-| |       | `-DeclRefExpr 0x1d068d0 <col:16> 'int' lvalue ParmVar 0x1d04a98 'x' 'int'
-| |       `-ImplicitCastExpr 0x1d06928 <col:20> 'int' <LValueToRValue>
-| |         `-DeclRefExpr 0x1d068f0 <col:20> 'int' lvalue ParmVar 0x1d04b18 'y' 'int'
-| |-CXXMethodDecl 0x1d04de8 <line:43:5, line:45:5> line:43:10 arrayFunc 'void (char *)'
-| | |-ParmVarDecl 0x1d04cf0 <col:20, col:35> col:25 charArray 'char *':'char *'
-| | `-CompoundStmt 0x1d06998 <col:38, line:45:5>
-| |   `-ReturnStmt 0x1d06988 <line:44:9>
-| |-CXXMethodDecl 0x1d05038 <line:46:5, line:48:5> line:46:10 intArrayFunc 'void (int *)'
-| | |-ParmVarDecl 0x1d04f40 <col:23, col:36> col:27 intArray 'int *':'int *'
-| | `-CompoundStmt 0x1d07540 <col:39, line:48:5>
-| |   `-ReturnStmt 0x1d069b0 <line:47:9>
-| |-CXXConstructorDecl 0x1d05ba0 <line:31:7> col:7 implicit constexpr Base 'void (const Base &)' inline default trivial noexcept-unevaluated 0x1d05ba0
-| | `-ParmVarDecl 0x1d05cb8 <col:7> col:7 'const Base &'
-| |-CXXConstructorDecl 0x1d05e38 <col:7> col:7 implicit constexpr Base 'void (Base &&)' inline default trivial noexcept-unevaluated 0x1d05e38
-| | `-ParmVarDecl 0x1d05f48 <col:7> col:7 'Base &&'
-| |-CXXMethodDecl 0x1d05ff8 <col:7> col:7 implicit operator= 'Base &(Base &&)' inline default trivial noexcept-unevaluated 0x1d05ff8
-| | `-ParmVarDecl 0x1d06108 <col:7> col:7 'Base &&'
-| |-CXXDestructorDecl 0x1d06680 <col:7> col:7 implicit used ~Base 'void () noexcept' inline default
-| | `-CompoundStmt 0x1d07cc8 <col:7>
-| `-CXXConstructorDecl 0x1d07738 <col:7> col:7 implicit used Base 'void () noexcept(false)' inline default
+| |-private 'baz'
+| |-protected 'lorem'
+| |-CXXRecordDecl 0xa7c948 <col:1, col:7> col:7 implicit class Base
+| |-AccessSpecDecl 0xa7c9d8 <line:34:5, col:11> col:5 public
+| |-CXXMethodDecl 0xa7cc30 <line:35:5, line:37:5> line:35:9 used add 'int (int, int, int)'
+| | |-ParmVarDecl 0xa7ca18 <col:13, col:17> col:17 used x 'int'
+| | |-ParmVarDecl 0xa7ca98 <col:20, col:24> col:24 used y 'int'
+| | |-ParmVarDecl 0xa7cb18 <col:27, col:31> col:31 z 'int'
+| | `-CompoundStmt 0xa808f0 <col:34, line:37:5>
+| |   `-ReturnStmt 0xa808e0 <line:36:9, col:20>
+| |     `-BinaryOperator 0xa808c0 <col:16, col:20> 'int' '+'
+| |       |-ImplicitCastExpr 0xa80890 <col:16> 'int' <LValueToRValue>
+| |       | `-DeclRefExpr 0xa80850 <col:16> 'int' lvalue ParmVar 0xa7ca18 'x' 'int'
+| |       `-ImplicitCastExpr 0xa808a8 <col:20> 'int' <LValueToRValue>
+| |         `-DeclRefExpr 0xa80870 <col:20> 'int' lvalue ParmVar 0xa7ca98 'y' 'int'
+| |-CXXMethodDecl 0xa7ce60 <line:38:5, line:40:5> line:38:9 used sub 'int (int, int)'
+| | |-ParmVarDecl 0xa7cd00 <col:13, col:17> col:17 used x 'int'
+| | |-ParmVarDecl 0xa7cd80 <col:20, col:24> col:24 used y 'int'
+| | `-CompoundStmt 0xa809a8 <col:27, line:40:5>
+| |   `-ReturnStmt 0xa80998 <line:39:9, col:20>
+| |     `-BinaryOperator 0xa80978 <col:16, col:20> 'int' '-'
+| |       |-ImplicitCastExpr 0xa80948 <col:16> 'int' <LValueToRValue>
+| |       | `-DeclRefExpr 0xa80908 <col:16> 'int' lvalue ParmVar 0xa7cd00 'x' 'int'
+| |       `-ImplicitCastExpr 0xa80960 <col:20> 'int' <LValueToRValue>
+| |         `-DeclRefExpr 0xa80928 <col:20> 'int' lvalue ParmVar 0xa7cd80 'y' 'int'
+| |-AccessSpecDecl 0xa7cf10 <line:41:5, col:12> col:5 private
+| |-CXXMethodDecl 0xa7d070 <line:42:5, line:44:5> line:42:9 mul 'int (int, int)'
+| | |-ParmVarDecl 0xa7cf50 <col:13, col:17> col:17 used x 'int'
+| | |-ParmVarDecl 0xa7cfd0 <col:20, col:24> col:24 used y 'int'
+| | `-CompoundStmt 0xa817a0 <col:27, line:44:5>
+| |   `-ReturnStmt 0xa81790 <line:43:9, col:20>
+| |     `-BinaryOperator 0xa81770 <col:16, col:20> 'int' '*'
+| |       |-ImplicitCastExpr 0xa81740 <col:16> 'int' <LValueToRValue>
+| |       | `-DeclRefExpr 0xa81700 <col:16> 'int' lvalue ParmVar 0xa7cf50 'x' 'int'
+| |       `-ImplicitCastExpr 0xa81758 <col:20> 'int' <LValueToRValue>
+| |         `-DeclRefExpr 0xa81720 <col:20> 'int' lvalue ParmVar 0xa7cfd0 'y' 'int'
+| |-CXXMethodDecl 0xa7d2a0 <line:45:5, line:47:5> line:45:9 arrayFunc 'int (char *)'
+| | |-ParmVarDecl 0xa7d1a0 <col:19, col:34> col:24 charArray 'char *':'char *'
+| | `-CompoundStmt 0xa817e8 <col:37, line:47:5>
+| |   `-ReturnStmt 0xa817d8 <line:46:9, col:16>
+| |     `-IntegerLiteral 0xa817b8 <col:16> 'int' 0
+| |-CXXMethodDecl 0xa7d4f8 <line:48:5, line:50:5> line:48:10 intArrayFunc 'void (int *)'
+| | |-ParmVarDecl 0xa7d400 <col:23, col:36> col:27 intArray 'int *':'int *'
+| | `-CompoundStmt 0xa81810 <col:39, line:50:5>
+| |   `-ReturnStmt 0xa81800 <line:49:9>
+| |-CXXConstructorDecl 0xa7e7e0 <line:33:7> col:7 implicit constexpr Base 'void (const Base &)' inline default trivial noexcept-unevaluated 0xa7e7e0
+| | `-ParmVarDecl 0xa7e8f8 <col:7> col:7 'const Base &'
+| |-CXXConstructorDecl 0xa7ec38 <col:7> col:7 implicit constexpr Base 'void (Base &&)' inline default trivial noexcept-unevaluated 0xa7ec38
+| | `-ParmVarDecl 0xa7f9c0 <col:7> col:7 'Base &&'
+| |-CXXMethodDecl 0xa7fa68 <col:7> col:7 implicit operator= 'Base &(Base &&)' inline default trivial noexcept-unevaluated 0xa7fa68
+| | `-ParmVarDecl 0xa7fb78 <col:7> col:7 'Base &&'
+| |-CXXDestructorDecl 0xa80770 <col:7> col:7 implicit used ~Base 'void () noexcept' inline default
+| | `-CompoundStmt 0xa82428 <col:7>
+| `-CXXConstructorDecl 0xa81a08 <col:7> col:7 implicit used Base 'void () noexcept(false)' inline default
 |   |-CXXCtorInitializer 'foo'
-|   | `-CXXConstructExpr 0x1d07b90 <col:7> 'foo' 'void ()'
+|   | `-CXXConstructExpr 0xa821c0 <col:7> 'foo' 'void ()'
 |   |-CXXCtorInitializer 'bar'
-|   | `-CXXConstructExpr 0x1d07c28 <col:7> 'bar' 'void () noexcept'
-|   `-CompoundStmt 0x1d07c90 <col:7>
-`-FunctionDecl 0x1d075b0 <line:51:1, line:57:1> line:51:5 main 'int ()'
-  `-CompoundStmt 0x1d07ea0 <col:12, line:57:1>
-    |-DeclStmt 0x1d07cd8 <line:52:5, col:14>
-    | `-VarDecl 0x1d076d0 <col:5, col:10> col:10 used base 'Base' callinit destroyed
-    |   `-CXXConstructExpr 0x1d07ca0 <col:10> 'Base' 'void () noexcept(false)'
-    |-CXXMemberCallExpr 0x1d07d80 <line:53:5, col:18> 'int'
-    | |-MemberExpr 0x1d07d10 <col:5, col:10> '<bound member function type>' .add 0x1d047c0
-    | | `-DeclRefExpr 0x1d07cf0 <col:5> 'Base' lvalue Var 0x1d076d0 'base' 'Base'
-    | |-IntegerLiteral 0x1d07d40 <col:14> 'int' 1
-    | `-IntegerLiteral 0x1d07d60 <col:17> 'int' 2
-    |-CXXMemberCallExpr 0x1d07e40 <line:54:5, col:18> 'int'
-    | |-MemberExpr 0x1d07dd0 <col:5, col:10> '<bound member function type>' .sub 0x1d049a8
-    | | `-DeclRefExpr 0x1d07db0 <col:5> 'Base' lvalue Var 0x1d076d0 'base' 'Base'
-    | |-IntegerLiteral 0x1d07e00 <col:14> 'int' 2
-    | `-IntegerLiteral 0x1d07e20 <col:17> 'int' 1
-    `-ReturnStmt 0x1d07e90 <line:56:5, col:12>
-      `-IntegerLiteral 0x1d07e70 <col:12> 'int' 0
+|   | `-CXXConstructExpr 0xa82258 <col:7> 'bar' 'void () noexcept'
+|   |-CXXCtorInitializer 'baz'
+|   | `-CXXConstructExpr 0xa822e8 <col:7> 'baz' 'void () noexcept'
+|   |-CXXCtorInitializer 'lorem'
+|   | `-CXXConstructExpr 0xa82378 <col:7> 'lorem' 'void () noexcept'
+|   `-CompoundStmt 0xa823f0 <col:7>
+`-FunctionDecl 0xa81880 <line:53:1, line:59:1> line:53:5 main 'int ()'
+  `-CompoundStmt 0xa82628 <col:12, line:59:1>
+    |-DeclStmt 0xa82438 <line:54:5, col:14>
+    | `-VarDecl 0xa819a0 <col:5, col:10> col:10 used base 'Base' callinit destroyed
+    |   `-CXXConstructExpr 0xa82400 <col:10> 'Base' 'void () noexcept(false)'
+    |-CXXMemberCallExpr 0xa82500 <line:55:5, col:21> 'int'
+    | |-MemberExpr 0xa82470 <col:5, col:10> '<bound member function type>' .add 0xa7cc30
+    | | `-DeclRefExpr 0xa82450 <col:5> 'Base' lvalue Var 0xa819a0 'base' 'Base'
+    | |-IntegerLiteral 0xa824a0 <col:14> 'int' 1
+    | |-IntegerLiteral 0xa824c0 <col:17> 'int' 2
+    | `-IntegerLiteral 0xa824e0 <col:20> 'int' 3
+    |-CXXMemberCallExpr 0xa825c8 <line:56:5, col:18> 'int'
+    | |-MemberExpr 0xa82558 <col:5, col:10> '<bound member function type>' .sub 0xa7ce60
+    | | `-DeclRefExpr 0xa82538 <col:5> 'Base' lvalue Var 0xa819a0 'base' 'Base'
+    | |-IntegerLiteral 0xa82588 <col:14> 'int' 2
+    | `-IntegerLiteral 0xa825a8 <col:17> 'int' 1
+    `-ReturnStmt 0xa82618 <line:58:5, col:12>
+      `-IntegerLiteral 0xa825f8 <col:12> 'int' 0
