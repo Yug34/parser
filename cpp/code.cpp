@@ -1,3 +1,13 @@
+struct aaa {
+    int x;
+};
+
+union bbb {
+    int random1;
+    char random2;
+    float random3;
+};
+
 class foo {
     public:
         foo() {}
@@ -18,7 +28,7 @@ class baz {
     protected:
 };
 
-class Base: public foo, private bar, protected baz {
+class Base: public foo, public bar {
     public:
     int add(int x, int y) {
         return x + y;
@@ -30,11 +40,18 @@ class Base: public foo, private bar, protected baz {
     int mul(int x, int y) {
         return x * y;
     }
+    void arrayFunc(char charArray[]) {
+        return;
+    }
+    void intArrayFunc(int intArray[]) {
+        return;
+    }
 };
 
 int main() {
     Base base;
     base.add(1, 2);
+    base.sub(2, 1);
 
     return 0;
 }
