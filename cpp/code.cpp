@@ -1,11 +1,7 @@
 struct aaa {
     int x;
-};
-
-union bbb {
-    int random1;
-    char random2;
-    float random3;
+    double d;
+    char c;
 };
 
 class foo {
@@ -28,7 +24,13 @@ class baz {
     protected:
 };
 
-class Base: public foo, public bar {
+class lorem {
+    public:
+    private:
+    protected:
+};
+
+class Base: public foo, public bar, private baz, protected lorem {
     public:
     int add(int x, int y) {
         return x + y;

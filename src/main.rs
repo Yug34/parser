@@ -28,17 +28,32 @@ pub struct Class {
     inherited: Inherit,
     methods: Vec<Method>
 }
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Struct {
+    name: String,
+    variables: Vec<Variable>
+}
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Variable {
+    name: String,
+    variable_type: String
+}
 
 lazy_static! {
+    // TODO:
+    //    merge these and clean up the `if`s in State.process_line()
     static ref RE: Regex = Regex::new(r"(\| | *|\|*)*([|`])-[A-Z,a-z]*").unwrap();
     static ref WORD: Regex = Regex::new(r"([A-Z,a-z]+)").unwrap();
     static ref GET_CLASS: Regex = Regex::new(r"referenced class [_,A-Z,a-z,0-9]+ definition").unwrap();
+    static ref GET_STRUCT: Regex = Regex::new(r"struct [_,A-Z,a-z,0-9]+ definition").unwrap();
     static ref GET_INHERITED_CLASS: Regex = Regex::new(r"'[_,A-Z,a-z,0-9]*'").unwrap();
     static ref GET_METHOD: Regex = Regex::new(r"(used )?[_,A-Z,a-z,0-9]+ '[(,),A-Z,a-z, ]+'").unwrap();
     static ref GET_METHOD_NAME: Regex = Regex::new(r"'[(,),A-Z,a-z, ]+'").unwrap();
+    static ref GET_VARIABLE: Regex = Regex::new(r"[_,A-Z,a-z,0-9]+ '[a-z]+'").unwrap();
 }
 
 pub struct State {
+    struct_list: Vec<Struct>,
     class_list: Vec<Class>,
     tree_chain: Vec<String>,
     matched_string: String,
@@ -47,6 +62,9 @@ pub struct State {
 }
 
 impl State {
+    pub fn struct_list(&self) -> &Vec<Struct> {
+        &self.struct_list
+    }
     pub fn class_list(&self) -> &Vec<Class> {
         &self.class_list
     }
@@ -56,9 +74,9 @@ impl State {
     fn initialize_state(&mut self, line: &String) {
         self.matched_string = RE.find(line).unwrap().as_str().to_owned();
         self.keyword = WORD.find(self.matched_string.as_str()).unwrap().as_str().to_owned();
-        // Or instead of using a Regexp, I could do this:
-        // self.keyword = self.matched_string.split_at(self.matched_string.find("-").unwrap() + 1).1.to_string();
-        // Unsure which one is better (read: faster), perhaps I'll benchmark, I'm curious.
+        // TODO: instead of a Regexp, I could do:
+        //  self.matched_string.split_at(self.matched_string.find("-").unwrap() + 1).1.to_string();
+        //  Unsure which one is better(/faster), perhaps I'll benchmark, I'm curious.
 
         // Note: Don't really need this and the logic after, there's no use of it in this project:
         //   It's there in case we need to know what our "branch" in the AST looks like and
@@ -71,7 +89,7 @@ impl State {
         } else {
             self.tree_chain.truncate(self.level - 1);
         }
-        self.tree_chain.push(self.keyword.to_string());
+        self.tree_chain.push(line.to_string());
     }
 
     pub fn process_line(&mut self, line: String) {
@@ -79,15 +97,23 @@ impl State {
 
         // CXXRecordDecl represents a C++ struct/union/class.
         if matches!(self.keyword.as_str(), "CXXRecordDecl") {
-            // Since CXXRecordDecl represents struct/union/class, matching specifically for class decl:
+            // Matching specifically for struct decl:
+            if GET_STRUCT.is_match(&line) {
+                let matched = GET_STRUCT.find(&line).unwrap().as_str().split(" ");
+                let struct_name = matched.collect::<Vec<&str>>()[1];
+                let new_struct = Struct {
+                    name: struct_name.to_string(),
+                    variables: vec![]
+                };
+                self.struct_list.push(new_struct);
+            }
+
+            // Matching specifically for class decl:
             if GET_CLASS.is_match(&line) {
                 let matched = GET_CLASS.find(&line).unwrap().as_str().split(" ");
                 let class_name = matched.collect::<Vec<&str>>()[2];
-
                 let class: Class = Class {
                     name: class_name.to_string(),
-                    // constructor: None,
-                    // destructor: None,
                     inherited: Inherit {
                         public: vec![],
                         private: vec![],
@@ -95,8 +121,27 @@ impl State {
                     },
                     methods: vec![]
                 };
-
                 self.class_list.push(class);
+            }
+        }
+
+        if matches!(self.keyword.as_str(), "FieldDecl") {
+            if GET_VARIABLE.is_match(&line) {
+                let variable_decl = GET_VARIABLE.find(&line).unwrap().as_str();
+                let variable_data = variable_decl.split(" ").collect::<Vec<&str>>();
+                let variable_name = variable_data[0].to_string();
+                let variable_signature = variable_data[1].replace("'", "");
+
+                let variable: Variable = Variable {
+                    name: variable_name,
+                    variable_type: variable_signature,
+                };
+
+                if self.search_tree_chain("struct") {
+                    let mut last_struct = self.struct_list.pop().unwrap();
+                    last_struct.variables.push(variable);
+                    self.struct_list.push(last_struct);
+                }
             }
         }
 
@@ -104,26 +149,25 @@ impl State {
             if GET_METHOD.is_match(&line) {
                 let method_str = GET_METHOD.find(&line).unwrap().as_str();
                 let method_signature = GET_METHOD_NAME.find(method_str).unwrap().as_str().replace("'", "");
-
                 let method_data = method_str.split(" ").collect::<Vec<&str>>();
-                // used add 'int (int, int)'
                 let is_method_used = method_data.contains(&"used");
+
                 let method: Method = Method {
                     name: if is_method_used {method_data[1].to_string()} else {method_data[0].to_string()},
                     signature: method_signature.to_string(),
                     used: is_method_used
                 };
 
-                let mut last = self.class_list.pop().unwrap();
-                last.methods.push(method);
-                self.class_list.push(last);
+                let mut last_class = self.class_list.pop().unwrap();
+                last_class.methods.push(method);
+                self.class_list.push(last_class);
             }
         }
 
         // public, private and protected represent the classes that the current class inherits from
         if matches!(self.keyword.as_str(), "public" | "private" | "protected") {
             let inherited_from = GET_INHERITED_CLASS.find(&line).unwrap().as_str().replace("'", "");
-            //TODO: Hacky, fix this, there's constant .pop() and .push()ing for no reason
+            //TODO: Stupid, needs fix. There's constant .pop() and .push()ing for no reason
             let mut last = self.class_list.pop().unwrap();
 
             match self.keyword.as_str() {
@@ -143,7 +187,17 @@ impl State {
         }
     }
 
+    pub fn search_tree_chain(&mut self, keyword: &str) -> bool {
+        for line in self.tree_chain.clone().into_iter().rev() {
+            if line.contains(keyword) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     pub fn new() -> State {
+        let struct_list: Vec<Struct> = vec![];
         let class_list: Vec<Class> = vec![];
         let tree_chain: Vec<String> = vec![];
         let matched_string = String::new();
@@ -151,6 +205,7 @@ impl State {
         let level = 0;
 
         State {
+            struct_list,
             class_list,
             tree_chain,
             matched_string,
@@ -165,14 +220,17 @@ fn main() {
         // Skip the first line in the AST dump (TranslationUnitDecl)
         read_lines.next();
 
+        // Then process the rest of the AST
         let mut state = State::new();
         for read_line in read_lines {
             if let Ok(ip) = read_line {
                 state.process_line(ip.as_str().to_owned());
             }
         }
+        state.search_tree_chain("aa");
 
-        let json_output = json!({"program-data": state.class_list});
+        // Print the output and write it to output.json
+        let json_output = json!({"class-data": state.class_list, "struct-data": state.struct_list});
         println!("{}", json_output);
         if let Ok(mut file) = File::create("output.json") {
             file.write_all(json_output.to_string().as_ref()).unwrap();
