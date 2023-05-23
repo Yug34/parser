@@ -1,9 +1,13 @@
 # parser
 
+
 ### Generate the `cpp/code.cpp`'s AST dump with `clang`:
 `clang -Xclang -ast-dump -fsyntax-only -std=c++17 -fno-color-diagnostics cpp/code.cpp > ./src/dump.txt`
 
-`-fno-color-diagnostics` because otherwise the generated AST dump has shell color codes in it.
+Using `-fno-color-diagnostics` because otherwise the generated AST dump has shell color codes in it.
+
+Using `-fsyntax-only` since we only need to run the preprocessor, parser and type checking stages of `clang`.
+
 
 ### Run the program
 `cargo run`

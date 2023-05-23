@@ -3,33 +3,33 @@ use std::fs::File;
 use std::io::{self, BufRead, Write};
 use std::path::Path;
 use regex::Regex;
-use serde::{Deserialize, Serialize};
+use serde::{Serialize};
 use serde_json::json;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Serialize)]
 pub struct Inherit {
     public: Vec<String>,
     private: Vec<String>,
     protected: Vec<String>
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Serialize)]
 pub struct Method {
     name: String,
     signature: String,
     used: bool
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Serialize)]
 pub struct Class {
     name: String,
     inherited: Inherit,
     methods: Vec<Method>
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Serialize)]
 pub struct Struct {
     name: String,
     variables: Vec<Variable>
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Serialize)]
 pub struct Variable {
     name: String,
     variable_type: String
