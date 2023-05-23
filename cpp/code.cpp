@@ -1,11 +1,17 @@
 struct Some_Struct {
     int x;
-    double d;
+    double referenced_double;
     char c;
 } randomStruct;
 
+class unusedClass {
+    public:
+    private:
+    protected:
+};
+
 class foo {
-    // TODO in the parser:
+    // TODO in the parser, constructors and destructors:
     public:
         foo() {}
         ~foo() {}
@@ -13,6 +19,7 @@ class foo {
     protected:
 };
 
+// Just some dummy classes, will be inherited in the Base class
 class bar {
     public:
     private:
@@ -34,6 +41,7 @@ class lorem {
 class Base: public foo, public bar, private baz, protected lorem {
     public:
     int add(int x, int y, int z) {
+        // Unused argument z won't have the "used" tag in the AST!
         return x + y;
     }
     int sub(int x, int y) {
@@ -49,11 +57,13 @@ class Base: public foo, public bar, private baz, protected lorem {
 };
 
 int main() {
+    // Using only these two (add, sub) methods from the Base class, the rest won't show up as "used" in the AST.
     Base base;
-    base.add(1, 2);
+    base.add(1, 2, 3);
     base.sub(2, 1);
 
-    randomStruct.d = 1.42;
+    // Referencing only the 'd' variable in the struct, it'll be tagged as referenced in the AST
+    randomStruct.referenced_double = 1.42;
 
     return 0;
 }
