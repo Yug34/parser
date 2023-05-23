@@ -33,12 +33,9 @@ pub struct Struct {
 pub struct Variable {
     name: String,
     variable_type: String
-    // TODO: Can have used/referenced tag in a Variable as well
 }
 
 lazy_static! {
-    // TODO:
-    //    merge these and clean up the `if`s in State.process_line()
     static ref RE: Regex = Regex::new(r"(\| | *|\|*)*([|`])-[A-Za-z]*").unwrap();
     static ref WORD: Regex = Regex::new(r"([A-Za-z]+)").unwrap();
     // TODO: referenced for Class: (referenced )?[_,A-Z,a-z,0-9]+ '[(,),A-Z,a-z, ,*]+'
