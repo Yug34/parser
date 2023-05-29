@@ -59,7 +59,7 @@ pub struct State {
 
 impl State {
     fn search_tree_path(&mut self, keyword: &str) -> bool {
-        for line in self.tree_path.clone().into_iter().rev() {
+        for line in self.tree_path.iter().rev() {
             if line.contains(keyword) {
                 return true;
             }
