@@ -1,5 +1,10 @@
 # parser
 
+Just a toy parser, mostly did this to play around with IO and String processing in Rust.
+
+It walks the AST dump of some C++ code and extracts some meaningful info, outputs it as a JSON object.
+
+Normally I'd have an FSA implementation instead of something like this.
 
 ### Generate the `cpp/code.cpp`'s AST dump with `clang`:
 `clang -Xclang -ast-dump -fsyntax-only -std=c++17 -fno-color-diagnostics cpp/code.cpp > ./src/dump.txt`
